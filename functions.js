@@ -20,6 +20,9 @@ function coinFlip() {
 }
 
 // Write a dice rolling function. E.g. dice() = 4.
+function roll() {
+    return Math.ceil(Math.random() * 6);
+}
 
 // Write a dice rolling function, where the dice can have any number of sides. E.g. dice(10)=9.
 
@@ -51,4 +54,4 @@ function coinFlip() {
 
 // Write a function that takes a string as input and returns a string containing its vowels. E.g. vowels("delicious") = "eiiou".
 
-module.exports = {double , triple, first, coinFlip};
+module.exports = {double , triple, first, coinFlip, roll};

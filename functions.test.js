@@ -1,5 +1,26 @@
 const myFuncs = require('./functions');
 
+// Add to be in range to expect
+expect.extend({
+    toBeIntWithinRange(received, floor, ceiling) {
+      const pass = Number.isInteger(received) && received >= floor && received <= ceiling;
+      if (pass) {
+        return {
+          message: () =>
+            `expected ${received} not to be within range ${floor} - ${ceiling}`,
+          pass: true,
+        };
+      } else {
+        return {
+          message: () =>
+            `expected ${received} to be within range ${floor} - ${ceiling}`,
+          pass: false,
+        };
+      }
+    },
+  });
+
+
 // Double a number. E.g. double(2) = 4.
 test('Duobbles 2 to equal 4', () => {
   expect(myFuncs.double(2)).toBe(4);
@@ -49,6 +70,13 @@ test('coinToss() = "heads" or "tails"', () => {
         asymmetricMatch: actual => actual === 'heads' || actual === 'tails'
     };
     for (let i = 0; i < 1000; i++) {
-        expect(myFuncs.coinFlip(" 156")).toEqual(headsOrTails);
+        expect(myFuncs.coinFlip()).toEqual(headsOrTails);
     }
+});
+
+// Write a dice rolling function. E.g. dice() = 4.
+test('roll() = 1 or 2 or 3 or 4 or 5 or 6', () => {
+    for (let i = 0; i < 1000; i++) {
+        expect(myFuncs.roll()).toBeIntWithinRange(1,6);
+    };
 });
