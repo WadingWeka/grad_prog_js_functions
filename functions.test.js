@@ -20,6 +20,26 @@ expect.extend({
     },
   });
 
+// Add to be in range to expect
+expect.extend({
+toBeWithinRange(received, floor, ceiling) {
+    const pass = received >= floor && received <= ceiling;
+    if (pass) {
+    return {
+        message: () =>
+        `expected ${received} not to be within range ${floor} - ${ceiling}`,
+        pass: true,
+    };
+    } else {
+    return {
+        message: () =>
+        `expected ${received} to be within range ${floor} - ${ceiling}`,
+        pass: false,
+    };
+    }
+},
+});
+
 
 // Double a number. E.g. double(2) = 4.
 test('Duobbles 2 to equal 4', () => {
@@ -79,4 +99,23 @@ test('roll() = 1 or 2 or 3 or 4 or 5 or 6', () => {
     for (let i = 0; i < 1000; i++) {
         expect(myFuncs.roll()).toBeIntWithinRange(1,6);
     };
+});
+
+// Write a dice rolling function, where the dice can have any number of sides. E.g. dice(10)=9.
+[6,100,1000].forEach(testData => {
+    test(`rollN(${testData}) = 1 to ${testData}`, () => {
+        let val;
+        let values = [];
+        let stanDiv  = testData * 0.05;
+        for (let i = 0; i < 100000; i++) {
+            val = myFuncs.rollN(testData);
+            values.push(val);
+            expect(val).toBeIntWithinRange(1,testData);
+        };
+        expect(Math.max(...values)).toEqual(testData);
+        expect(Math.min(...values)).toEqual(1);
+        const sum = values.reduce((acc, x) => acc += x, 0);
+        const ave = sum / values.length;
+        expect(ave).toBeWithinRange(testData/2-stanDiv, testData/2+stanDiv);
+    });
 });

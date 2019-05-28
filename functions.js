@@ -25,6 +25,10 @@ function roll() {
 }
 
 // Write a dice rolling function, where the dice can have any number of sides. E.g. dice(10)=9.
+function rollN(n) {
+    return Math.ceil(Math.random() * n);
+}
+
 
 // Test if an integer is even; return true if it is, false if not. E.g.
 
@@ -54,4 +58,4 @@ function roll() {
 
 // Write a function that takes a string as input and returns a string containing its vowels. E.g. vowels("delicious") = "eiiou".
 
-module.exports = {double , triple, first, coinFlip, roll};
+module.exports = {double , triple, first, coinFlip, roll, rollN};
